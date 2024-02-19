@@ -1,0 +1,46 @@
+CREATE TABLE PUBLISHER (
+	name varchar(10),
+	address varchar(100),
+	phone varchar(15),
+	PRIMARY KEY (name)
+);
+
+CREATE TABLE BOOK (
+    book_id int(5),
+    title varchar(30),
+    publisher_name varchar(15),
+    pub_year int(4),
+    PRIMARY KEY (book_id),
+    FOREIGN KEY (publisher_name) REFERENCES PUBLISHER(name)
+);
+
+CREATE TABLE BOOK_AUTHORS (
+	book_id int(5),
+	author_name varchar(20),
+	FOREIGN KEY (book_id) REFERENCES BOOK(book_id) ON DELETE CASCADE
+);
+
+CREATE TABLE LIBRARY_PROGRAMME (
+	programme_id int(10),
+	programme_name varchar(30),
+	address varchar(100),
+	PRIMARY KEY (programme_id)
+);
+
+CREATE TABLE BOOK_LENDING (
+	book_id int(5),
+	programme_id int(10),
+	card_no int(10),
+	date_out date,
+	due_date date,
+	FOREIGN KEY (book_id) REFERENCES BOOK(book_id),
+	FOREIGN KEY (programme_id) REFERENCES LIBRARY_PROGRAMME(programme_id) ON DELETE CASCADE
+);
+
+CREATE TABLE BOOK_COPIES (
+	book_id int(5),
+	programme_id int(5),
+	copies int(10),
+	FOREIGN KEY (book_id) REFERENCES BOOK(book_id),
+	FOREIGN KEY (programme_id) REFERENCES LIBRARY_PROGRAMME(programme_id) ON DELETE CASCADE
+);
